@@ -25,6 +25,19 @@
       margin-top: 10px;
     }
 
+    #flash-message {
+      color: red;
+      font-weight: bold;
+      animation: flash 1s infinite;
+      display: none;
+      margin-top: 10px;
+    }
+
+    @keyframes flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
     input[type="password"] {
       padding: 10px;
       font-size: 16px;
@@ -33,7 +46,12 @@
     button {
       padding: 10px 15px;
       font-size: 16px;
-      margin-left: 10px;
+      margin: 5px;
+    }
+
+    #confirm-btn:disabled {
+      background-color: gray;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -44,74 +62,85 @@
     <h2>Enter PIN to access site</h2>
     <input type="password" id="pin-input" placeholder="Enter PIN">
     <button onclick="checkPin()">Submit</button>
-    <div class="rainbow-text">Ask Dev William Warden Oliver for PIN</div>
+
+    <div class="rainbow-text">
+      Ask Dev William Warden Oliver for PIN
+    </div>
+
+    <div>
+      <a href="#" id="get-pin">Get PIN</a>
+      <div id="flash-message">Sub to Wills YT wwounblockedwebsites to unlock website</div>
+    </div>
+
+    <button id="confirm-btn" disabled>Confirm</button>
   </div>
 
   <!-- Hidden content until PIN is correct -->
   <div id="main-content">
-
     <div class="rectangle" style="display: table-grid">
-
       <div style="width:600px; display: table-cell;">
-        <p></p>
         <h4 style="margin: -20px;"> WWO Unblocked <img src="Assets/infinity.png" alt="" width="20"></h4>
-        <p></p> 
       </div>
 
       <div style="width:600px; display: table-cell;">
-        <a href="index.html" style="left: 200%;" id="hover-worthy"> Home 
-          <div class="button"></div>
-        </a>
+        <a href="index.html" id="hover-worthy"> Home </a>
       </div>
-
       <div style="width:600px; display: table-cell;">
-        <a href="projects.html" style="left: 150%;" id="hover-worthy"> Games 
-          <div class="button"></div>
-        </a>
+        <a href="projects.html" id="hover-worthy"> Games </a>
       </div>
-
       <div style="width:600px; display: table-cell;">
-        <a href="apps.html" style="left: 100%;" id="hover-worthy"> Apps 
-          <div class="button"></div>
-        </a>
+        <a href="apps.html" id="hover-worthy"> Apps </a>
       </div>
-
       <div style="width:600px; display: table-cell;">
-        <a href="other.html" style="left: 50%;" id="hover-worthy"> Other 
-          <div class="button"></div>
-        </a>
+        <a href="other.html" id="hover-worthy"> Other </a>
       </div>
-
       <div style="width:600px; display: table-cell;">
-        <a href="https://nasa.gov" style="left: 0%;" id="hover-worthy"> Escape 
-          <div class="button"></div>
-        </a>
+        <a href="https://nasa.gov" id="hover-worthy"> Escape </a>
       </div>
-
     </div>
 
     <div class="header">
-      <h1 style="margin-bottom: -0px;" id="h1ani"><b> WWO Unblocked </b></h1>
+      <h1 id="h1ani"><b> WWO Unblocked </b></h1>
       <p><b> Explore the Unblocked Universe with WWO Unblocked! </b></p>
       <p>Version 1</p>
-
       <div class="spacer"></div>
-      <div class="spacer"></div>
-      <div class="spacer"></div>
-
       <p>© 2024 WWO Unblocked Rights Reserved.</p>
       <a class="text-button" href="toc.html">TERMS OF USE</a>
     </div>
-
-    <script src="script.js"></script>
   </div>
 
   <script>
+    const getPinLink = document.getElementById("get-pin");
+    const flashMessage = document.getElementById("flash-message");
+    const confirmBtn = document.getElementById("confirm-btn");
+    const pinGate = document.getElementById("pin-gate");
+    const mainContent = document.getElementById("main-content");
+
+    // Show flash message on clicking "Get PIN"
+    getPinLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      flashMessage.style.display = "block";
+    });
+
+    // Unlock confirm button after 2 minutes
+    setTimeout(() => {
+      confirmBtn.disabled = false;
+    }, 2 * 60 * 1000); // 2 minutes in ms
+
+    confirmBtn.addEventListener("click", () => {
+      const username = prompt("Type your username to unlock:");
+      if (username && username.trim() !== "") {
+        pinGate.style.display = "none";
+        mainContent.style.display = "block";
+      } else {
+        alert("You must enter a username to proceed.");
+      }
+    });
+
     function checkPin() {
       const pin = document.getElementById('pin-input').value;
       if (pin === 'test') {
-        document.getElementById('pin-gate').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
+        alert('PIN correct. Wait for confirm button to unlock.');
       } else {
         alert('Incorrect PIN. Ask Dev William Warden Oliver.');
       }
@@ -119,4 +148,3 @@
   </script>
 </body>
 </html>
-
